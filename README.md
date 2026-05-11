@@ -5,9 +5,8 @@
 ![Google Colab](https://img.shields.io/badge/Colab-F9AB00?style=for-the-badge&logo=googlecolab&logoColor=white)
 ![Status](https://img.shields.io/badge/status-conclu%C3%8Ddo-green?style=for-the-badge)
 
-### 👩‍💻 Sobre a Autora
+### 👩‍💻 Sobre a Autora / About the Author
 **Lidi Moura** | Arquiteta de Soluções & Especialista em Dados
-Integro vivências da Psicologia e das Artes para criar soluções tecnológicas éticas, sustentáveis e baseadas em dados.
 * 🎓 **Especialista em Data Science** pelo programa ONE (Alura/Oracle).
 * 🤖 **Especialista em IA** em formação (Alura/Santander).
 * 📜 **Em preparação para certificações internacionais:** OCI (Oracle Cloud Infrastructure) e MySQL.
@@ -15,26 +14,32 @@ Integro vivências da Psicologia e das Artes para criar soluções tecnológicas
 
 ---
 
-### 📂 Entregas do Projeto
+### 📂 Entregas do Projeto / Project Deliverables
 
 Para garantir a transparência técnica e a facilidade na tomada de decisão, este projeto foi estruturado em duas frentes de entrega:
 
-* 📊 **[Painel Executivo Interativo (Streamlit)](https://alura-store-insights.streamlit.app/):** Desenvolvido para stakeholders, diretores e futuros clientes. Este dashboard vivo foca exclusivamente em KPIs de negócios, impacto financeiro e na recomendação estratégica final, abstraindo a complexidade do código.
+* 📊 **[Painel Executivo Interativo / Executive Dashboard (Streamlit)](https://alura-store-insights.streamlit.app/):** Desenvolvido para stakeholders e diretores. Foca exclusivamente em KPIs de negócios, impacto financeiro e na recomendação estratégica final, abstraindo a complexidade do código.
 
-* 🛠️ **[Relatório Técnico e ETL (Deep Dive)](https://lidimoura.github.io/challenge1-data-science-Alura-Store/):** Hospedado no GitHub Pages, este relatório apresenta os bastidores da análise. Recomendado para Tech Leads e recrutadores, detalha todo o processo de Extração, Limpeza (ETL), tratamentos de dados e a lógica estatística construída no Google Colab.
+* 🛠️ **[Documentação Técnica e ETL / Deep Dive (GitHub Pages)](https://lidimoura.github.io/challenge1-data-science-Alura-Store/):** Recomendado para Tech Leads e recrutadores. Apresenta os bastidores da análise, detalhando todo o processo de Extração, Limpeza (ETL), tratamentos de dados e a lógica estatística construída no Google Colab.
 
-## Visão geral do projeto
+---
+
+## [PT-BR] Visão geral do projeto
 Este projeto de Análise Exploratória de Dados (EDA) foi desenvolvido para dar suporte à tomada de decisão executiva da rede Alura Store. O objetivo central foi processar a base de vendas, identificar padrões de consumo, avaliar custos logísticos e, por fim, recomendar estrategicamente o fechamento da unidade menos rentável da rede.
+
+## [EN] Project Overview
+This project involves an Exploratory Data Analysis (EDA) developed to support executive decision-making for the Alura Store network. The primary objective was to process sales data, identify consumption patterns, evaluate logistics costs, and strategically recommend the decommissioning of the network's least profitable unit.
+
+---
 
 ## Stack tecnológica
 - **Python & Pandas**: Limpeza de dados nulos, manipulação de DataFrames e cálculo de KPIs (faturamento, ticket médio, rentabilidade).
 - **Matplotlib & Seaborn**: Geração de visualizações estatísticas para data storytelling.
+- **Plotly & Streamlit**: Dashboards interativos e visualização dinâmica.
 - **Google Colab**: Ambiente de prototipagem e documentação técnica.
 
 ## Resultados e recomendação estratégica
-A análise verificou métricas de satisfação, volume de vendas por categoria (eletrônicos, móveis, brinquedos) e eficiência logística. O insight principal apontou a **loja 4** como o gargalo operacional da rede. 
-
-Apesar de ter o frete médio mais baixo, a unidade falhou em converter essa vantagem em lucratividade, inclusive nas categorias de alta demanda. A decisão técnica pelo fechamento da loja 4 é sustentada principalmente por dois indicadores críticos:
+A análise verificou métricas de satisfação, volume de vendas por categoria e eficiência logística. O insight principal apontou a **loja 4** como o gargalo operacional da rede. 
 
 ### 1. Lucro mensal médio anual
 O gráfico abaixo demonstra a consistência do baixo desempenho financeiro da loja 4 em comparação com as filiais concorrentes ao longo dos meses.
@@ -47,7 +52,7 @@ O gráfico abaixo demonstra a consistência do baixo desempenho financeiro da lo
 Aqui, comprovamos a ineficiência de conversão. O ticket médio da loja 4 opera muito abaixo do ponto de equilíbrio ideal da rede.
 
 <p align="center">
-  <img src="assets/grafico_receita_media_por_loja.png" alt="Gráfico de receita média por venda" width="700">
+  <img src="assets/grafico_receita_media_venda.png" alt="Gráfico de receita média por venda" width="700">
 </p>
 
 ## Como explorar a análise
