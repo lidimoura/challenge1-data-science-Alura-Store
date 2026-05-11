@@ -47,7 +47,7 @@ O gráfico abaixo demonstra a consistência do baixo desempenho financeiro da lo
 Aqui, comprovamos a ineficiência de conversão. O ticket médio da loja 4 opera muito abaixo do ponto de equilíbrio ideal da rede.
 
 <p align="center">
-  <img src="assets/grafico_receita_media_venda.png" alt="Gráfico de receita média por venda" width="700">
+  <img src="assets/grafico_receita_media_por_loja.png" alt="Gráfico de receita média por venda" width="700">
 </p>
 
 ## Como explorar a análise
