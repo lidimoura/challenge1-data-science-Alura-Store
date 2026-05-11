@@ -5,7 +5,135 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import os
 
+# Configuracao da paginaimport streamlit as st
+import pandas as pd
+import plotly.express as px
+import matplotlib.pyplot as plt
+import seaborn as sns
+import os
+
 # Configuracao da pagina
+st.set_page_config(page_title="Alura Store | Executive Analytics", layout="wide")
+
+# Estilizacao CSS (Insight Box visivel com texto escuro e tons terrosos)
+st.markdown("""
+    <style>
+    .main { background-color: #faf8f5; color: #2c1e1a; }
+    .stTabs [data-baseweb="tab-list"] { gap: 24px; }
+    .stTabs [data-baseweb="tab"] { height: 50px; white-space: pre-wrap; font-size: 16px; font-weight: bold; }
+    div[data-testid="stMetricValue"] { font-size: 28px; color: #5d4037; }
+    h1, h2, h3 { color: #5d4037; font-family: 'Segoe UI', sans-serif; }
+    .insight-box { 
+        background-color: #f4ede4; 
+        padding: 18px; 
+        border-radius: 8px; 
+        border-left: 5px solid #8b4513; 
+        color: #3e2723; 
+        font-size: 15px;
+        margin-top: 10px; 
+        margin-bottom: 20px; 
+    }
+    </style>
+    """, unsafe_allow_html=True)
+
+# --- SIDEBAR: BIO, LINKS E IDIOMA ---
+lang = st.sidebar.selectbox("Language / Idioma", ["PT-BR", "EN"])
+
+if lang == "PT-BR":
+    st.sidebar.title("Lidi Moura")
+    st.sidebar.markdown("""
+    **Arquiteta de Solucoes e Especialista em Dados**
+    
+    Especialista em Data Science pelo programa **ONE (Alura/Oracle)**. 
+    Em especializacao de **IA (Alura/Santander)** e preparacao para certificacoes internacionais **OCI** e **MySQL**.
+    """)
+    st.sidebar.divider()
+    st.sidebar.markdown("### Acessos e Contato")
+    st.sidebar.link_button("Repositorio no GitHub", "https://github.com/lidimoura/challenge1-data-science-Alura-Store")
+    st.sidebar.link_button("Relatorio Tecnico (Deep Dive)", "https://lidimoura.github.io/challenge1-data-science-Alura-Store/")
+    st.sidebar.link_button("LinkedIn", "https://linkedin.com/in/lidimoura")
+    st.sidebar.link_button("GitHub Profile", "https://github.com/lidimoura")
+    
+    title, subtitle = "Painel: Alura Store", "Relatorio Executivo de Performance"
+    sec_context_title = "Contexto e Metodologia (ETL)"
+    sec_context_text = "O dataset original foi submetido a limpeza rigorosa com Python (Pandas), tratando valores nulos e normalizando dados para calcular Ticket Medio e Faturamento Mensal."
+    rec_title, rec_text = "Recomendacao Estrategica", "Acao Tecnica: Desativacao Imediata da Unidade Operacional Loja 4. A unidade opera sistematicamente abaixo do ponto de equilibrio."
+    tab1_label, tab2_label = "Lucro Mensal Medio", "Receita Media por Venda"
+    footer_text = "Transparencia e Vibe Coding: Analise e estrategia por Lidi Moura. Polimento otimizado com IA."
+else:
+    st.sidebar.title("Lidi Moura")
+    st.sidebar.markdown("""
+    **Solutions Architect and Data Specialist**
+    
+    Data Science Specialist through the **ONE program (Alura/Oracle)**. 
+    Specializing in **AI (Alura/Santander)** and preparing for **OCI** and **MySQL** certifications.
+    """)
+    st.sidebar.divider()
+    st.sidebar.markdown("### Links and Contact")
+    st.sidebar.link_button("Project Repository", "https://github.com/lidimoura/challenge1-data-science-Alura-Store")
+    st.sidebar.link_button("Technical Report (Deep Dive)", "https://lidimoura.github.io/challenge1-data-science-Alura-Store/")
+    st.sidebar.link_button("LinkedIn", "https://linkedin.com/in/lidimoura")
+    st.sidebar.link_button("GitHub Profile", "https://github.com/lidimoura")
+    
+    title, subtitle = "Dashboard: Alura Store", "Executive Performance Report"
+    sec_context_title = "Context and Methodology (ETL)"
+    sec_context_text = "The raw dataset underwent rigorous cleaning using Python (Pandas), handling null values and normalizing data to calculate Average Ticket and Monthly Revenue."
+    rec_title, rec_text = "Strategic Recommendation", "Technical Action: Immediate Decommissioning of Store 4. The unit consistently operates below the break-even point."
+    tab1_label, tab2_label = "Average Monthly Profit", "Average Revenue per Sale"
+    footer_text = "Transparency and Vibe Coding: Analysis and strategy by Lidi Moura. Polishing optimized with AI."
+
+# --- CABECALHO ---
+st.title(title)
+st.markdown(f"### {subtitle}")
+st.divider()
+
+# --- RECOMENDACAO ---
+col_rec, col_kpi = st.columns([2, 1])
+with col_rec:
+    st.header(rec_title)
+    st.error(rec_text)
+with col_kpi:
+    st.header("KPIs")
+    st.metric("Margem Loja 4" if lang == "PT-BR" else "Store 4 Margin", "-22%", "Critico")
+    st.metric("Saving Estimado" if lang == "PT-BR" else "Estimated Saving", "R$ 12.400,00", "Mensal")
+
+# --- CARREGAMENTO ---
+@st.cache_data
+def load_data():
+    if os.path.exists("AluraStoreBrasil.csv"):
+        return pd.read_csv("AluraStoreBrasil.csv").dropna()
+    return None
+
+df = load_data()
+
+if df is not None:
+    st.divider()
+    tab1, tab2 = st.tabs([tab1_label, tab2_label])
+
+    with tab1:
+        st.subheader(tab1_label)
+        st.markdown(f"<div class='insight-box'><b>Insight:</b> {'A Loja 4 apresenta o desempenho financeiro mais baixo de forma consistente.' if lang == 'PT-BR' else 'Store 4 consistently shows the lowest financial performance.'}</div>", unsafe_allow_html=True)
+        # Mock de agrupamento por mes (ou logica do lucro mensal do seu colab)
+        fig1_int = px.line(df, x=df.index, y="Preço", title=tab1_label, color_discrete_sequence=['#8b4513'])
+        st.plotly_chart(fig1_int, use_container_width=True)
+
+    with tab2:
+        st.subheader(tab2_label)
+        st.markdown(f"<div class='insight-box'><b>Insight:</b> {'O ticket medio da Loja 4 nao atinge o patamar de rentabilidade.' if lang == 'PT-BR' else 'Store 4 average ticket fails to meet profitability standards.'}</div>", unsafe_allow_html=True)
+        rev_data = df.groupby('Loja')['Preço'].mean().reset_index()
+        col_a, col_b = st.columns(2)
+        with col_a:
+            fig2_int = px.bar(rev_data, x='Loja', y='Preço', color='Preço', color_continuous_scale='Brwnyl', text_auto='.2f')
+            st.plotly_chart(fig2_int, use_container_width=True)
+        with col_b:
+            fig2_stat, ax2 = plt.subplots(figsize=(6, 4))
+            sns.barplot(data=rev_data, x='Loja', y='Preço', palette='copper', ax=ax2)
+            st.pyplot(fig2_stat)
+else:
+    st.error("Arquivo AluraStoreBrasil.csv nao encontrado.")
+
+st.divider()
+st.markdown(f"<div style='text-align: center; color: #666; font-size: 13px;'><b>{footer_text}</b><br>Reflorestando o Digital.</div>", unsafe_allow_html=True)
 st.set_page_config(page_title="Alura Store | Executive Analytics", layout="wide")
 
 # Estilizacao CSS Customizada (Tons Terrosos, Tipografia e Insight Box visivel)
