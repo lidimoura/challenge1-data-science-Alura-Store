@@ -5,6 +5,14 @@
 ![Google Colab](https://img.shields.io/badge/Colab-F9AB00?style=for-the-badge&logo=googlecolab&logoColor=white)
 ![Status](https://img.shields.io/badge/status-conclu%C3%8Ddo-green?style=for-the-badge)
 
+### 📂 Entregas do Projeto
+
+Para garantir a transparência técnica e a facilidade na tomada de decisão, este projeto foi estruturado em duas frentes de entrega:
+
+* 📊 **[Painel Executivo Interativo (Streamlit)](https://alura-store-insights.streamlit.app/):** Desenvolvido para stakeholders, diretores e futuros clientes. Este dashboard vivo foca exclusivamente em KPIs de negócios, impacto financeiro e na recomendação estratégica final, abstraindo a complexidade do código.
+
+* 🛠️ **[Documentação Técnica e ETL (Deep Dive)](https://lidimoura.github.io/challenge1-data-science-Alura-Store/):** Hospedado no GitHub Pages, este relatório apresenta os bastidores da análise. Recomendado para Tech Leads e recrutadores, detalha todo o processo de Extração, Limpeza (ETL), tratamentos de dados e a lógica estatística construída no Google Colab.
+
 ## Visão geral do projeto
 Este projeto de Análise Exploratória de Dados (EDA) foi desenvolvido para dar suporte à tomada de decisão executiva da rede Alura Store. O objetivo central foi processar a base de vendas, identificar padrões de consumo, avaliar custos logísticos e, por fim, recomendar estrategicamente o fechamento da unidade menos rentável da rede.
 
