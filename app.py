@@ -1,14 +1,12 @@
 import streamlit as st
 import pandas as pd
 import plotly.express as px
-import matplotlib.pyplot as plt
-import seaborn as sns
 import os
 
-# --- CONFIGURACAO ---
+# Configuracao da pagina
 st.set_page_config(page_title="Alura Store | Executive Analytics", layout="wide")
 
-# --- CSS ---
+# Estilizacao CSS (Insight Box com texto escuro e tons terrosos, sem emojis)
 st.markdown("""
     <style>
     .main { background-color: #faf8f5; color: #2c1e1a; }
@@ -29,9 +27,8 @@ st.markdown("""
     </style>
     """, unsafe_allow_html=True)
 
-# --- SIDEBAR E IDIOMA ---
-# A propriedade 'key' previne o erro de ElementId duplicado
-lang = st.sidebar.selectbox("Language / Idioma", ["PT-BR", "EN"], key="lang_selector_unique")
+# --- SIDEBAR: BIO, LINKS E IDIOMA ---
+lang = st.sidebar.selectbox("Language / Idioma", ["PT-BR", "EN"])
 
 if lang == "PT-BR":
     st.sidebar.title("Lidi Moura")
@@ -48,15 +45,12 @@ if lang == "PT-BR":
     st.sidebar.link_button("LinkedIn", "https://linkedin.com/in/lidimoura")
     st.sidebar.link_button("GitHub Profile", "https://github.com/lidimoura")
     
-    title = "Painel: Alura Store"
-    subtitle = "Relatorio Executivo de Performance"
-    rec_title = "Recomendacao Estrategica"
-    rec_text = "Acao Tecnica: Desativacao Imediata da Unidade Operacional Loja 4. A unidade opera sistematicamente abaixo do ponto de equilibrio."
-    tab1_label = "1. Receita Media por Venda"
-    tab2_label = "2. Faturamento Total (Lucro)"
-    tab3_label = "3. Volume por Categoria"
-    tab4_label = "4. Eficiencia Logistica"
-    footer_text = "Transparencia e Vibe Coding: Analise e estrategia por Lidi Moura. Polimento otimizado com IA."
+    title, subtitle = "Painel: Alura Store", "Relatorio Executivo de Performance"
+    sec_context_title = "Contexto e Metodologia (ETL)"
+    sec_context_text = "O dataset original foi submetido a limpeza rigorosa com Python (Pandas), tratando valores nulos e normalizando dados para calcular Ticket Medio e Rentabilidade Mensal."
+    rec_title, rec_text = "Recomendacao Estrategica", "Acao Tecnica: Desativacao Imediata da Unidade Operacional Loja 4. A unidade opera sistematicamente abaixo do ponto de equilibrio da rede."
+    tab1_label, tab2_label = "Lucro Mensal Medio Anual", "Receita Media por Venda"
+    footer_text = "Transparencia e Vibe Coding: Analise de dados e estrategia por Lidi Moura. Polimento estrutural otimizado com IA."
 else:
     st.sidebar.title("Lidi Moura")
     st.sidebar.markdown("""
@@ -72,15 +66,12 @@ else:
     st.sidebar.link_button("LinkedIn", "https://linkedin.com/in/lidimoura")
     st.sidebar.link_button("GitHub Profile", "https://github.com/lidimoura")
     
-    title = "Dashboard: Alura Store"
-    subtitle = "Executive Performance Report"
-    rec_title = "Strategic Recommendation"
-    rec_text = "Technical Action: Immediate Decommissioning of Store 4. The unit consistently operates below the break-even point."
-    tab1_label = "1. Average Revenue per Sale"
-    tab2_label = "2. Total Revenue (Profit)"
-    tab3_label = "3. Volume by Category"
-    tab4_label = "4. Logistics Efficiency"
-    footer_text = "Transparency and Vibe Coding: Analysis and strategy by Lidi Moura. Polishing optimized with AI."
+    title, subtitle = "Dashboard: Alura Store", "Executive Performance Report"
+    sec_context_title = "Context and Methodology (ETL)"
+    sec_context_text = "The raw dataset underwent rigorous cleaning using Python (Pandas), handling null values and normalizing data to calculate Average Ticket and Monthly Profitability."
+    rec_title, rec_text = "Strategic Recommendation", "Technical Action: Immediate Decommissioning of Store 4. The unit consistently operates below the network's break-even point."
+    tab1_label, tab2_label = "Average Annual Monthly Profit", "Average Revenue per Sale"
+    footer_text = "Transparency and Vibe Coding: Data analysis and strategy by Lidi Moura. Structural polishing optimized with AI."
 
 # --- CABECALHO ---
 st.title(title)
@@ -97,7 +88,7 @@ with col_kpi:
     st.metric("Margem Loja 4" if lang == "PT-BR" else "Store 4 Margin", "-22%", "Critico")
     st.metric("Saving Estimado" if lang == "PT-BR" else "Estimated Saving", "R$ 12.400,00", "Mensal")
 
-# --- CARREGAMENTO DE DADOS ---
+# --- CARREGAMENTO ---
 @st.cache_data
 def load_data():
     if os.path.exists("AluraStoreBrasil.csv"):
@@ -108,81 +99,62 @@ df = load_data()
 
 if df is not None:
     st.divider()
-    # Adicionamos 4 abas para acomodar todos os graficos
-    tab1, tab2, tab3, tab4 = st.tabs([tab1_label, tab2_label, tab3_label, tab4_label])
+    # Apenas as duas abas que estao no seu README
+    tab1, tab2 = st.tabs([tab1_label, tab2_label])
 
-    terrous_colors = ['#8b4513', '#a0522d', '#d2691e', '#cd853f', '#f4a460']
-
-    # --- ABA 1: RECEITA MEDIA POR VENDA (GRAFICO 2 DO README) ---
+    # ABA 1: Lucro Mensal Medio Anual
     with tab1:
         st.subheader(tab1_label)
-        st.markdown(f"<div class='insight-box'><b>Insight:</b> {'O ticket medio da Loja 4 nao atinge o patamar de rentabilidade ideal da rede.' if lang == 'PT-BR' else 'Store 4 average ticket fails to meet the network profitability standards.'}</div>", unsafe_allow_html=True)
+        st.markdown(f"<div class='insight-box'><b>Insight:</b> {'Demonstracao da consistencia do baixo desempenho financeiro da loja 4 em comparacao com as filiais concorrentes ao longo dos meses.' if lang == 'PT-BR' else 'Demonstrates the consistent underperformance of store 4 compared to competing branches over the months.'}</div>", unsafe_allow_html=True)
         
-        rev_data = df.groupby('Loja')['Preço'].mean().reset_index()
         col1_a, col1_b = st.columns(2)
         
         with col1_a:
-            fig1_int = px.bar(rev_data, x='Loja', y='Preço', color='Preço', color_continuous_scale='YlOrBr', text_auto='.2f', title="Plotly (Interativo)")
-            st.plotly_chart(fig1_int, use_container_width=True)
-        with col1_b:
-            fig1_stat, ax1 = plt.subplots(figsize=(6, 4))
-            sns.barplot(data=rev_data, x='Loja', y='Preço', palette='copper', ax=ax1)
-            ax1.set_title("Seaborn / Matplotlib (Estatico)")
-            ax1.set_ylabel("Receita Media (R$)")
-            st.pyplot(fig1_stat)
+            st.markdown("**Visao Interativa (Plotly)**" if lang == "PT-BR" else "**Interactive View (Plotly)**")
+            # Agrupamento para receita mensal. Se voce usou colunas diferentes, o Plotly se ajusta aqui.
+            if 'Data' in df.columns:
+                df['Data'] = pd.to_datetime(df['Data'])
+                df['Mes'] = df['Data'].dt.month
+                lucro_data = df.groupby(['Mes', 'Loja'])['Preço'].sum().reset_index()
+                fig1_int = px.line(lucro_data, x='Mes', y='Preço', color='Loja', title="Evolucao Mensal", color_discrete_sequence=['#8b4513', '#a0522d', '#cd853f', '#f4a460'])
+                st.plotly_chart(fig1_int, use_container_width=True)
+            else:
+                # Fallback caso a coluna Data nao exista no CSV bruto (agrupa pelo total para nao quebrar)
+                lucro_data = df.groupby('Loja')['Preço'].sum().reset_index()
+                fig1_int = px.bar(lucro_data, x='Loja', y='Preço', color='Loja', title="Faturamento Consolidado", color_discrete_sequence=['#8b4513', '#a0522d', '#cd853f', '#f4a460'])
+                st.plotly_chart(fig1_int, use_container_width=True)
 
-    # --- ABA 2: FATURAMENTO TOTAL / LUCRO (GRAFICO 1 DO README) ---
+        with col1_b:
+            st.markdown("**Grafico Original (Colab / README)**" if lang == "PT-BR" else "**Original Chart (Colab / README)**")
+            # Puxando exatamente a imagem do seu README
+            if os.path.exists("assets/grafico_lucro_mensal_medio_anual.png"):
+                st.image("assets/grafico_lucro_mensal_medio_anual.png", use_container_width=True)
+            else:
+                st.warning("Imagem assets/grafico_lucro_mensal_medio_anual.png nao encontrada no repositorio.")
+
+    # ABA 2: Receita Media por Venda
     with tab2:
         st.subheader(tab2_label)
-        st.markdown(f"<div class='insight-box'><b>Insight:</b> {'A Loja 4 apresenta o desempenho financeiro mais baixo de forma consistente.' if lang == 'PT-BR' else 'Store 4 consistently shows the lowest total financial performance.'}</div>", unsafe_allow_html=True)
+        st.markdown(f"<div class='insight-box'><b>Insight:</b> {'Aqui, comprovamos a ineficiencia de conversao. O ticket medio da loja 4 opera muito abaixo do ponto de equilibrio ideal da rede.' if lang == 'PT-BR' else 'Here, we prove the conversion inefficiency. Store 4 average ticket operates well below the ideal break-even point.'}</div>", unsafe_allow_html=True)
         
-        profit_data = df.groupby('Loja')['Preço'].sum().reset_index()
         col2_a, col2_b = st.columns(2)
         
         with col2_a:
-            fig2_int = px.bar(profit_data, x='Loja', y='Preço', color='Loja', color_discrete_sequence=terrous_colors, title="Plotly (Interativo)")
+            st.markdown("**Visao Interativa (Plotly)**" if lang == "PT-BR" else "**Interactive View (Plotly)**")
+            rev_data = df.groupby('Loja')['Preço'].mean().reset_index()
+            fig2_int = px.bar(rev_data, x='Loja', y='Preço', color='Preço', color_continuous_scale='YlOrBr', text_auto='.2f')
             st.plotly_chart(fig2_int, use_container_width=True)
+            
         with col2_b:
-            fig2_stat, ax2 = plt.subplots(figsize=(6, 4))
-            sns.barplot(data=profit_data, x='Loja', y='Preço', palette='copper', ax=ax2)
-            ax2.set_title("Seaborn / Matplotlib (Estatico)")
-            ax2.set_ylabel("Faturamento Total (R$)")
-            st.pyplot(fig2_stat)
-
-    # --- ABA 3: VOLUME POR CATEGORIA ---
-    with tab3:
-        st.subheader(tab3_label)
-        st.markdown(f"<div class='insight-box'><b>Insight:</b> {'A demanda da rede e puxada fortemente por categorias especificas.' if lang == 'PT-BR' else 'Network demand is strongly driven by specific categories.'}</div>", unsafe_allow_html=True)
-        
-        col3_a, col3_b = st.columns(2)
-        with col3_a:
-            fig3_int = px.histogram(df, x="Categoria do Produto", color="Categoria do Produto", color_discrete_sequence=terrous_colors, title="Plotly (Interativo)")
-            st.plotly_chart(fig3_int, use_container_width=True)
-        with col3_b:
-            fig3_stat, ax3 = plt.subplots(figsize=(6, 4))
-            sns.countplot(data=df, x='Categoria do Produto', palette='copper', order=df['Categoria do Produto'].value_counts().index, ax=ax3)
-            plt.xticks(rotation=45)
-            ax3.set_title("Seaborn / Matplotlib (Estatico)")
-            ax3.set_ylabel("Volume de Vendas")
-            st.pyplot(fig3_stat)
-
-    # --- ABA 4: FRETE / LOGISTICA ---
-    with tab4:
-        st.subheader(tab4_label)
-        st.markdown(f"<div class='insight-box'><b>Insight:</b> {'Apesar da Loja 4 ter o menor custo de envio, ela nao converte isso em vantagem financeira.' if lang == 'PT-BR' else 'Although Store 4 has the lowest shipping cost, it does not convert it into financial advantage.'}</div>", unsafe_allow_html=True)
-        
-        col4_a, col4_b = st.columns(2)
-        with col4_a:
-            fig4_int = px.box(df, x="Loja", y="Frete", color_discrete_sequence=['#8b4513'], title="Plotly (Interativo)")
-            st.plotly_chart(fig4_int, use_container_width=True)
-        with col4_b:
-            fig4_stat, ax4 = plt.subplots(figsize=(6, 4))
-            sns.boxplot(data=df, x="Loja", y="Frete", palette="YlOrBr", ax=ax4)
-            ax4.set_title("Seaborn / Matplotlib (Estatico)")
-            st.pyplot(fig4_stat)
+            st.markdown("**Grafico Original (Colab / README)**" if lang == "PT-BR" else "**Original Chart (Colab / README)**")
+            # Puxando exatamente a imagem do seu README
+            if os.path.exists("assets/grafico_receita_media_venda.png"):
+                st.image("assets/grafico_receita_media_venda.png", use_container_width=True)
+            else:
+                st.warning("Imagem assets/grafico_receita_media_venda.png nao encontrada no repositorio.")
 
 else:
-    st.error("Arquivo AluraStoreBrasil.csv nao encontrado.")
+    st.error("Arquivo AluraStoreBrasil.csv nao encontrado." if lang == "PT-BR" else "File AluraStoreBrasil.csv not found.")
 
 # --- RODAPE ---
 st.divider()
