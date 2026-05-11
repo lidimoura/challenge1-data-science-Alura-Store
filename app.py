@@ -8,7 +8,7 @@ import os
 # Configuracao da pagina
 st.set_page_config(page_title="Alura Store | Executive Analytics", layout="wide")
 
-# Estilizacao CSS Customizada (Tons Terrosos e Tipografia Executiva)
+# Estilizacao CSS Customizada (Tons Terrosos, Tipografia e Insight Box visivel)
 st.markdown("""
     <style>
     .main { background-color: #faf8f5; color: #2c1e1a; }
@@ -16,22 +16,38 @@ st.markdown("""
     .stTabs [data-baseweb="tab"] { height: 50px; white-space: pre-wrap; font-size: 16px; font-weight: bold; }
     div[data-testid="stMetricValue"] { font-size: 28px; color: #5d4037; }
     h1, h2, h3 { color: #5d4037; font-family: 'Segoe UI', sans-serif; }
-    .insight-box { background-color: #ffffff; padding: 15px; border-radius: 8px; border-left: 5px solid #8b4513; margin-top: 10px; margin-bottom: 20px; }
+    
+    /* Insight Box com texto escuro e fundo de contraste suave para leitura perfeita */
+    .insight-box { 
+        background-color: #f4ede4; 
+        padding: 18px; 
+        border-radius: 8px; 
+        border-left: 5px solid #8b4513; 
+        color: #3e2723; 
+        font-size: 15px;
+        margin-top: 10px; 
+        margin-bottom: 20px; 
+        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
     </style>
     """, unsafe_allow_html=True)
 
-# --- SIDEBAR: SELETOR DE IDIOMA E PERFIL ---
+# --- SIDEBAR: BIO, LINKS E IDIOMA ---
 lang = st.sidebar.selectbox("Language / Idioma", ["PT-BR", "EN"])
 
 if lang == "PT-BR":
     st.sidebar.title("Lidi Moura")
-    st.sidebar.markdown("**Arquiteta de Solucoes e Especialista em Dados**")
+    st.sidebar.markdown("""
+    **Arquiteta de Solucoes & Especialista em Dados**
+    
+    Especialista em Data Science pelo programa **ONE (Alura/Oracle)**. 
+    Em especializacao de **IA (Alura/Santander)** e preparacao para certificacoes internacionais **OCI** e **MySQL**.
+    """)
     st.sidebar.divider()
     
-    st.sidebar.markdown("### Acesso ao Projeto")
+    st.sidebar.markdown("### Acessos e Contato")
     st.sidebar.link_button("Repositorio no GitHub", "https://github.com/lidimoura/challenge1-data-science-Alura-Store")
-    
-    st.sidebar.markdown("### Contato Profissional")
+    st.sidebar.link_button("Relatorio Tecnico (Deep Dive)", "https://lidimoura.github.io/challenge1-data-science-Alura-Store/")
     st.sidebar.link_button("LinkedIn", "https://linkedin.com/in/lidimoura")
     st.sidebar.link_button("GitHub Profile", "https://github.com/lidimoura")
     
@@ -45,9 +61,9 @@ if lang == "PT-BR":
     sec_context_text = """
     **Desafio de Negocio:** Avaliar a rentabilidade de uma rede de 4 unidades operacionais e identificar gargalos logisticos e de conversao.
     
-    **Processamento de Dados (ETL):** O dataset original foi submetido a um processo de limpeza rigoroso no Google Colab utilizando Python (Pandas). 
+    **Processamento de Dados (ETL):** O dataset original foi submetido a um processo de limpeza rigoroso utilizando Python (Pandas). 
     Realizei o tratamento de valores nulos (NaN), normalizacao de tipagem de dados e engenharia de recursos (feature engineering) para calcular 
-    indicadores chave como Ticket Medio, Volume de Vendas por Categoria e Impacto do Frete. O resultado desta modelagem fundamenta as visualizacoes interativas e estaticas abaixo.
+    indicadores chave. O resultado desta modelagem fundamenta as visualizacoes interativas e estaticas abaixo.
     """
     
     rec_title = "Recomendacao Estrategica (Xeque-Mate)"
@@ -67,13 +83,17 @@ if lang == "PT-BR":
 
 else:
     st.sidebar.title("Lidi Moura")
-    st.sidebar.markdown("**Solutions Architect and Data Specialist**")
+    st.sidebar.markdown("""
+    **Solutions Architect & Data Specialist**
+    
+    Data Science Specialist through the **ONE program (Alura/Oracle)**. 
+    Currently specializing in **AI (Alura/Santander)** and preparing for **OCI** and **MySQL** international certifications.
+    """)
     st.sidebar.divider()
     
-    st.sidebar.markdown("### Project Access")
-    st.sidebar.link_button("GitHub Repository", "https://github.com/lidimoura/challenge1-data-science-Alura-Store")
-    
-    st.sidebar.markdown("### Professional Contact")
+    st.sidebar.markdown("### Links & Contact")
+    st.sidebar.link_button("Project Repository", "https://github.com/lidimoura/challenge1-data-science-Alura-Store")
+    st.sidebar.link_button("Technical Report (Deep Dive)", "https://lidimoura.github.io/challenge1-data-science-Alura-Store/")
     st.sidebar.link_button("LinkedIn", "https://linkedin.com/in/lidimoura")
     st.sidebar.link_button("GitHub Profile", "https://github.com/lidimoura")
     
@@ -87,9 +107,9 @@ else:
     sec_context_text = """
     **Business Challenge:** Evaluate the profitability of a 4-unit operational network and identify logistics and conversion bottlenecks.
     
-    **Data Processing (ETL):** The original dataset underwent rigorous cleaning in Google Colab using Python (Pandas). 
+    **Data Processing (ETL):** The original dataset underwent rigorous cleaning using Python (Pandas). 
     I handled null values (NaN), normalized data types, and applied feature engineering to calculate 
-    key indicators such as Average Ticket, Sales Volume by Category, and Freight Impact. The result of this modeling underpins the visualizations below.
+    key indicators. The result of this modeling underpins the visualizations below.
     """
     
     rec_title = "Strategic Recommendation"
@@ -144,7 +164,6 @@ if df is not None:
     
     tab1, tab2, tab3 = st.tabs([tab1_label, tab2_label, tab3_label])
 
-    # Paletas padronizadas
     terrous_colors = ['#8b4513', '#a0522d', '#d2691e', '#cd853f', '#f4a460']
 
     with tab1:
@@ -197,12 +216,12 @@ if df is not None:
         col3_a, col3_b = st.columns(2)
         
         with col3_a:
-            st.markdown("**Visao Interativa (Plotly Boxplot)**" if lang == "PT-BR" else "**Interactive View (Plotly Boxplot)**")
+            st.markdown("**Visao Interativa (Plotly)**" if lang == "PT-BR" else "**Interactive View (Plotly)**")
             fig_frete_int = px.box(df, x="Loja", y="Frete", color_discrete_sequence=['#8b4513'])
             st.plotly_chart(fig_frete_int, use_container_width=True)
             
         with col3_b:
-            st.markdown("**Analise Estatistica (Seaborn Boxplot)**" if lang == "PT-BR" else "**Statistical Analysis (Seaborn Boxplot)**")
+            st.markdown("**Analise Estatistica (Seaborn)**" if lang == "PT-BR" else "**Statistical Analysis (Seaborn)**")
             fig3, ax3 = plt.subplots(figsize=(6, 4))
             sns.boxplot(data=df, x="Loja", y="Frete", palette="YlOrBr", ax=ax3)
             st.pyplot(fig3)
