@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import plotly.express as px
+import os
 
 # Configuração da página
 st.set_page_config(page_title="Alura Store | Executive Analytics", layout="wide")
@@ -20,8 +21,15 @@ st.markdown("""
 lang = st.sidebar.selectbox("Language / Idioma", ["PT-BR", "EN"])
 
 if lang == "PT-BR":
-    st.sidebar.title("Lidi Moura")
+    st.sidebar.title("Lídi Moura")
     st.sidebar.markdown("**Arquiteta de Soluções e Especialista em Dados**")
+    st.sidebar.divider()
+    
+    # Seção de Contato/Portfólio
+    st.sidebar.markdown("### Portfólio & Contato")
+    st.sidebar.link_button("LinkedIn", "https://linkedin.com/in/lidimoura")
+    st.sidebar.link_button("GitHub", "https://github.com/lidimoura")
+    
     st.sidebar.divider()
     st.sidebar.info("Projeto: Alura Store v1.0")
     
@@ -41,9 +49,17 @@ if lang == "PT-BR":
     tab2_label = "Eficiência Logística"
     tab3_label = "Diagnóstico de Gargalo"
     footer_text = "Transparência e Vibe Coding: Análise e estratégia por Lidi Moura. Polimento estrutural otimizado com IA."
+    error_msg = "Base de dados não encontrada. Certifique-se de que o arquivo 'AluraStoreBrasil.csv' está no seu repositório GitHub."
 else:
     st.sidebar.title("Lidi Moura")
     st.sidebar.markdown("**Solutions Architect & Data Specialist**")
+    st.sidebar.divider()
+
+    # Contact/Portfolio Section
+    st.sidebar.markdown("### Portfolio & Networking")
+    st.sidebar.link_button("LinkedIn", "https://linkedin.com/in/lidimoura")
+    st.sidebar.link_button("GitHub", "https://github.com/lidimoura")
+
     st.sidebar.divider()
     st.sidebar.info("Project: Alura Store v1.0")
 
@@ -63,62 +79,66 @@ else:
     tab2_label = "Logistics Efficiency"
     tab3_label = "Bottleneck Diagnosis"
     footer_text = "Transparency & Vibe Coding: Analysis and strategy by Lidi Moura. Structural polishing optimized with AI."
+    error_msg = "Database not found. Please ensure 'AluraStoreBrasil.csv' is present in your GitHub repository."
 
 # --- CABEÇALHO ---
 st.title(title)
 st.markdown(f"### {subtitle}")
 st.divider()
 
-# --- RESUMO EXECUTIVO ---
-col_rec, col_kpi = st.columns([1.5, 1])
-
-with col_rec:
-    st.header(rec_title)
-    st.error(rec_text)
-
-with col_kpi:
-    st.header("KPIs")
-    st.metric(metric_1_label, "-22%", "Below Average")
-    st.metric(metric_2_label, "R$ 12.400,00", "Projected")
-
-st.divider()
-
-# --- CARREGAMENTO DE DADOS ---
+# --- CARREGAMENTO DE DADOS COM TRATAMENTO DE ERRO ---
 @st.cache_data
 def load_data():
-    # Certifique-se de salvar o df limpo como CSV no Colab primeiro
-    return pd.read_csv("AluraStoreBrasil.csv").dropna()
+    file_path = "AluraStoreBrasil.csv"
+    if os.path.exists(file_path):
+        return pd.read_csv(file_path).dropna()
+    else:
+        return None
 
 df = load_data()
 
-# --- ABAS DO RELATÓRIO ---
-tab1, tab2, tab3 = st.tabs([tab1_label, tab2_label, tab3_label])
+if df is not None:
+    # --- RESUMO EXECUTIVO ---
+    col_rec, col_kpi = st.columns([1.5, 1])
 
-with tab1:
-    st.subheader(tab1_label)
-    # Gráfico de Volume por Categoria
-    fig_cat = px.histogram(df, x="Categoria do Produto", color="Categoria do Produto",
-                           title="Volume Total de Vendas por Categoria",
-                           color_discrete_sequence=px.colors.sequential.Copper)
-    st.plotly_chart(fig_cat, use_container_width=True)
+    with col_rec:
+        st.header(rec_title)
+        st.error(rec_text)
 
-with tab2:
-    st.subheader(tab2_label)
-    # Gráfico de Boxplot para Frete
-    fig_frete = px.box(df, x="Loja", y="Frete", 
-                       title="Distribuição de Custos de Frete por Unidade",
-                       color_discrete_sequence=['#8b4513'])
-    st.plotly_chart(fig_frete, use_container_width=True)
+    with col_kpi:
+        st.header("KPIs")
+        st.metric(metric_1_label, "-22%", "Below Average")
+        st.metric(metric_2_label, "R$ 12.400,00", "Projected")
 
-with tab3:
-    st.subheader(tab3_label)
-    # Gráfico de Faturamento Médio (O ponto principal da sua correção)
-    revenue_data = df.groupby('Loja')['Preço'].mean().reset_index()
-    fig_rev = px.bar(revenue_data, x='Loja', y='Preço', 
-                     title="Ticket Médio (Faturamento por Venda) por Loja",
-                     color='Preço', color_continuous_scale='YlOrBr',
-                     text_auto='.2f')
-    st.plotly_chart(fig_rev, use_container_width=True)
+    st.divider()
+
+    # --- ABAS DO RELATÓRIO ---
+    tab1, tab2, tab3 = st.tabs([tab1_label, tab2_label, tab3_label])
+
+    with tab1:
+        st.subheader(tab1_label)
+        fig_cat = px.histogram(df, x="Categoria do Produto", color="Categoria do Produto",
+                               title="Volume Total de Vendas por Categoria",
+                               color_discrete_sequence=px.colors.sequential.Copper)
+        st.plotly_chart(fig_cat, use_container_width=True)
+
+    with tab2:
+        st.subheader(tab2_label)
+        fig_frete = px.box(df, x="Loja", y="Frete", 
+                           title="Distribuição de Custos de Frete por Unidade",
+                           color_discrete_sequence=['#8b4513'])
+        st.plotly_chart(fig_frete, use_container_width=True)
+
+    with tab3:
+        st.subheader(tab3_label)
+        revenue_data = df.groupby('Loja')['Preço'].mean().reset_index()
+        fig_rev = px.bar(revenue_data, x='Loja', y='Preço', 
+                         title="Ticket Médio (Faturamento por Venda) por Loja",
+                         color='Preço', color_continuous_scale='YlOrBr',
+                         text_auto='.2f')
+        st.plotly_chart(fig_rev, use_container_width=True)
+else:
+    st.error(error_msg)
 
 # --- RODAPÉ ---
 st.divider()
