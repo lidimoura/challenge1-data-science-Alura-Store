@@ -207,7 +207,7 @@ if df is not None:
         with col2_b:
             st.markdown("**Documentação Técnica (Ref. README)**" if lang == "PT-BR" else "**Technical Documentation (README Ref.)**")
             if os.path.exists("assets/grafico_receita_media_por_loja.png"):
-                st.image("assets/grafico_receita_media_venda.png", use_container_width=True)
+                st.image("assets/grafico_receita_media_por_loja.png", use_container_width=True)
             else:
                 st.info("Imagem 'grafico_receita_media_venda.png' documentada no relatorio base." if lang == "PT-BR" else "Image documented in base report.")
 
