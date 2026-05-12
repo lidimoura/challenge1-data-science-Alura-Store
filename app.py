@@ -5,10 +5,10 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import os
 
-# Configuracao da pagina
+# Configuração da página
 st.set_page_config(page_title="Alura Store | Executive Analytics", layout="wide")
 
-# Estilizacao CSS (Insight Box com texto escuro e tons terrosos, estritamente sem emojis)
+# Estilização CSS (Insight Box com texto escuro e tons terrosos, estritamente sem emojis)
 st.markdown("""
     <style>
     .main { background-color: #faf8f5; color: #2c1e1a; }
@@ -39,13 +39,13 @@ if lang == "PT-BR":
     **Arquiteta de Soluções e Especialista em Dados**
     
     Especialista em Data Science pelo programa **ONE (Alura/Oracle)**. 
-    Em especializacao de **IA (Alura/Santander)** e preparacao para certificacoes internacionais **OCI** e **MySQL**.
+    Em especialização de **IA (Alura/Santander)** e preparação para certificações internacionais **OCI** e **MySQL**.
     """)
     st.sidebar.divider()
     
     st.sidebar.markdown("### Acessos e Contato")
     st.sidebar.link_button("Repositório no GitHub", "https://github.com/lidimoura/challenge1-data-science-Alura-Store")
-    st.sidebar.link_button("Relatório Tecnico (Deep Dive)", "https://lidimoura.github.io/challenge1-data-science-Alura-Store/")
+    st.sidebar.link_button("Relatório Técnico (Deep Dive)", "https://lidimoura.github.io/challenge1-data-science-Alura-Store/")
     st.sidebar.link_button("LinkedIn", "https://linkedin.com/in/lidimoura")
     st.sidebar.link_button("GitHub Profile", "https://github.com/lidimoura")
     
@@ -57,27 +57,27 @@ if lang == "PT-BR":
     
     sec_context_title = "Contexto e Metodologia (ETL)"
     sec_context_text = """
-    **Desafio de Negocio:** Avaliar a rentabilidade de uma rede de 4 unidades operacionais e identificar gargalos logísticos e de conversão.
+    **Desafio de Negócio:** Avaliar a rentabilidade de uma rede de 4 unidades operacionais e identificar gargalos logísticos e de conversão.
     
     **Processamento de Dados (ETL):** O dataset original foi submetido a um processo de limpeza rigoroso utilizando Python (Pandas). 
     Realizei o tratamento de valores nulos (NaN), normalização de tipagem de dados e engenharia de recursos (feature engineering) para calcular 
-    indicadores chave como Ticket Médio, Lucratividade Mensal, Volume de Vendas por Categoria e Impacto do Frete. O resultado desta modelagem fundamenta as visualizacoes interativas e estaticas abaixo, demonstrando proficiencia na aplicaço de múltiplas bibliotecas visuais (Plotly, Seaborn, Matplotlib).
+    indicadores-chave como Ticket Médio, Lucratividade Mensal, Volume de Vendas por Categoria e Impacto do Frete. O resultado desta modelagem fundamenta as visualizações interativas e estáticas abaixo, demonstrando proficiência na aplicação de múltiplas bibliotecas visuais (Plotly, Seaborn, Matplotlib).
     """
     
-    rec_title = "Recomendaço Estratégica (Xeque-Mate)"
+    rec_title = "Recomendação Estratégica (Xeque-Mate)"
     rec_text = """
     **Ação Técnica: Desativação Imediata da Unidade Operacional Loja 4.**
     
     A análise de dados cruzados prova de forma cabal que a Loja 4 atua como um ofensor financeiro. 
-    Embora apresente os menores custos de frete da rede, a unidade possui o menor Ticket Medio e nao consegue converter 
-    o volume de demanda em lucro real, operando sistematicamente abaixo do ponto de equilibrio ideal da rede.
+    Embora apresente os menores custos de frete da rede, a unidade possui o menor Ticket Médio e não consegue converter 
+    o volume de demanda em lucro real, operando sistematicamente abaixo do ponto de equilíbrio ideal da rede.
     """
     
     tab1_label = "Lucro Mensal Médio"
     tab2_label = "Receita Média por Venda"
     tab3_label = "Faturamento Total"
     tab4_label = "Volume e Categorias"
-    tab5_label = "Eficiencia Logistica"
+    tab5_label = "Eficiência Logística"
     
     footer_text = "Transparência e Vibe Coding: Análise de dados, lógica de programação e tomada de decisão estratégica são de minha autoria (Lídi Moura). A formatação estrutural deste dashboard foi otimizada com auxílio de IA, focando em agilidade e entrega profissional de alto valor."
 
@@ -127,27 +127,27 @@ else:
     tab4_label = "Volume and Categories"
     tab5_label = "Logistics Efficiency"
     
-    footer_text = "Transparency and Vibe Coding: Data analysis, programming logic, and strategic decision-making are entirely my own (Lidi Moura). The structural formatting of this dashboard was optimized with AI assistance, focusing on agility and professional delivery."
+    footer_text = "Transparency and Vibe Coding: Data analysis, programming logic, and strategic decision-making are entirely my own (Lídi Moura). The structural formatting of this dashboard was optimized with AI assistance, focusing on agility and professional delivery."
 
-# --- CABECALHO ---
+# --- CABEÇALHO ---
 st.title(title)
 st.markdown(f"### {subtitle}")
 st.divider()
 
-# --- SITUACAO E TRATAMENTO ---
+# --- SITUAÇÃO E TRATAMENTO ---
 st.header(sec_context_title)
 st.write(sec_context_text)
 st.divider()
 
-# --- RECOMENDACAO E KPI ---
+# --- RECOMENDAÇÃO E KPI ---
 col_rec, col_kpi = st.columns([2, 1])
 with col_rec:
     st.header(rec_title)
     st.error(rec_text)
 with col_kpi:
     st.header("KPIs")
-    st.metric("Margem Loja 4" if lang == "PT-BR" else "Store 4 Margin", "-22%", "Critico / Critical")
-    st.metric("Saving Estimado" if lang == "PT-BR" else "Estimated Saving", "R$ 12.400,00", "Ao Mes / Monthly")
+    st.metric("Margem Loja 4" if lang == "PT-BR" else "Store 4 Margin", "-22%", "Crítico / Critical")
+    st.metric("Saving Estimado" if lang == "PT-BR" else "Estimated Saving", "R$ 12.400,00", "Ao Mês / Monthly")
 
 # --- CARREGAMENTO DE DADOS ---
 @st.cache_data
@@ -162,7 +162,7 @@ df = load_data()
 
 if df is not None:
     st.divider()
-    st.header("EvidÊncias Baseadas em Dados (Full Spectrum)" if lang == "PT-BR" else "Data-Driven Evidence (Full Spectrum)")
+    st.header("Evidências Baseadas em Dados (Full Spectrum)" if lang == "PT-BR" else "Data-Driven Evidence (Full Spectrum)")
     
     tab1, tab2, tab3, tab4, tab5 = st.tabs([tab1_label, tab2_label, tab3_label, tab4_label, tab5_label])
     terrous_colors = ['#8b4513', '#a0522d', '#d2691e', '#cd853f', '#f4a460']
@@ -170,7 +170,7 @@ if df is not None:
     # ABA 1: Lucro Mensal (Foco README)
     with tab1:
         st.subheader(tab1_label)
-        st.markdown(f"<div class='insight-box'><b>Insight:</b> {'O grafico abaixo demonstra a consistencia do baixo desempenho financeiro da loja 4 em comparacao com as filiais concorrentes ao longo dos meses. Esta visualizacao justifica a necessidade imediata de contencao de gastos operacionais nesta unidade.' if lang == 'PT-BR' else 'The chart below demonstrates the consistency of store 4 low financial performance compared to competing branches over the months. This visualization justifies the immediate need to contain operating costs at this unit.'}</div>", unsafe_allow_html=True)
+        st.markdown(f"<div class='insight-box'><b>Insight:</b> {'O gráfico abaixo demonstra a consistência do baixo desempenho financeiro da loja 4 em comparação com as filiais concorrentes ao longo dos meses. Esta visualização justifica a necessidade imediata de contenção de gastos operacionais nesta unidade.' if lang == 'PT-BR' else 'The chart below demonstrates the consistency of store 4 low financial performance compared to competing branches over the months. This visualization justifies the immediate need to contain operating costs at this unit.'}</div>", unsafe_allow_html=True)
         col1_a, col1_b = st.columns(2)
         with col1_a:
             st.markdown("**Visão Interativa (Plotly)**" if lang == "PT-BR" else "**Interactive View (Plotly)**")
@@ -190,18 +190,18 @@ if df is not None:
             if os.path.exists("assets/grafico_lucro_mensal_medio_anual.png"):
                 st.image("assets/grafico_lucro_mensal_medio_anual.png", use_container_width=True)
             else:
-                st.info("Imagem 'grafico_lucro_mensal_medio_anual.png' documentada no relatorio base." if lang == "PT-BR" else "Image documented in base report.")
+                st.info("Imagem 'grafico_lucro_mensal_medio_anual.png' documentada no relatório base." if lang == "PT-BR" else "Image documented in base report.")
 
-    # ABA 2: Receita Media por Venda (Foco README)
+    # ABA 2: Receita Média por Venda (Foco README)
     with tab2:
         st.subheader(tab2_label)
-        st.markdown(f"<div class='insight-box'><b>Insight:</b> {'Aqui, comprovamos a ineficiencia de conversao. O ticket medio da loja 4 opera muito abaixo do ponto de equilibrio ideal da rede, comprovando que volume de vendas local nao se traduz em lucratividade real.' if lang == 'PT-BR' else 'Here, we prove the conversion inefficiency. Store 4 average ticket operates well below the ideal break-even point, proving that local sales volume does not translate into real profitability.'}</div>", unsafe_allow_html=True)
+        st.markdown(f"<div class='insight-box'><b>Insight:</b> {'Aqui, comprovamos a ineficiência de conversão. O ticket médio da loja 4 opera muito abaixo do ponto de equilíbrio ideal da rede, comprovando que o volume de vendas local não se traduz em lucratividade real.' if lang == 'PT-BR' else 'Here, we prove the conversion inefficiency. Store 4 average ticket operates well below the ideal break-even point, proving that local sales volume does not translate into real profitability.'}</div>", unsafe_allow_html=True)
         col2_a, col2_b = st.columns(2)
         with col2_a:
             st.markdown("**Visão Interativa (Plotly)**" if lang == "PT-BR" else "**Interactive View (Plotly)**")
             rev_data = df.groupby('Loja')['Preço'].mean().reset_index()
             fig2_int = px.bar(rev_data, x='Loja', y='Preço', color='Preço', color_continuous_scale='YlOrBr', text_auto='.2f')
-            fig2_int.update_layout(xaxis_title="Loja", yaxis_title="Faturamento Medio (R$)")
+            fig2_int.update_layout(xaxis_title="Loja", yaxis_title="Faturamento Médio (R$)")
             st.plotly_chart(fig2_int, use_container_width=True)
             
         with col2_b:
@@ -209,17 +209,19 @@ if df is not None:
             if os.path.exists("assets/grafico_receita_media_por_loja.png"):
                 st.image("assets/grafico_receita_media_por_loja.png", use_container_width=True)
             else:
-                st.info("Imagem 'grafico_receita_media_venda.png' documentada no relatorio base." if lang == "PT-BR" else "Image documented in base report.")
+                st.info("Imagem 'grafico_receita_media_por_loja.png' documentada no relatório base." if lang == "PT-BR" else "Image documented in base report.")
 
     # ABA 3: Faturamento Total por Unidade
     with tab3:
         st.subheader(tab3_label)
-        st.markdown(f"<div class='insight-box'><b>Insight:</b> {'Analise consolidada da receita bruta gerada por cada filial. A Loja 4 contribui de forma limitante para a receita global da rede, reforcando a hipotese de reestruturacao.' if lang == 'PT-BR' else 'Consolidated analysis of gross revenue generated by each branch. Store 4 contributes marginally to the global revenue, reinforcing the restructuring hypothesis.'}</div>", unsafe_allow_html=True)
+        st.markdown(f"<div class='insight-box'><b>Insight:</b> {'Análise consolidada da receita bruta gerada por cada filial. A Loja 4 contribui de forma limitante para a receita global da rede, reforçando a hipótese de reestruturação.' if lang == 'PT-BR' else 'Consolidated analysis of gross revenue generated by each branch. Store 4 contributes marginally to the global revenue, reinforcing the restructuring hypothesis.'}</div>", unsafe_allow_html=True)
         col3_a, col3_b = st.columns(2)
         
+        # Correção exata da variável "Preço" com 'ç' aqui
         fat_data = df.groupby('Loja')['Preço'].sum().reset_index()
+        
         with col3_a:
-            st.markdown("**Visao Interativa (Plotly)**" if lang == "PT-BR" else "**Interactive View (Plotly)**")
+            st.markdown("**Visão Interativa (Plotly)**" if lang == "PT-BR" else "**Interactive View (Plotly)**")
             fig3_int = px.bar(fat_data, x='Loja', y='Preço', color='Loja', color_discrete_sequence=terrous_colors, text_auto='.2s')
             fig3_int.update_layout(xaxis_title="Loja", yaxis_title="Faturamento Total (R$)")
             st.plotly_chart(fig3_int, use_container_width=True)
@@ -233,7 +235,7 @@ if df is not None:
     # ABA 4: Volume de Vendas por Categoria
     with tab4:
         st.subheader(tab4_label)
-        st.markdown(f"<div class='insight-box'><b>Insight:</b> {'O volume de vendas e puxado por categorias de baixo ticket. Analisar essa distribuicao ajuda a entender a composicao da demanda e por que a rede precisa focar na rentabilidade por produto.' if lang == 'PT-BR' else 'Sales volume is driven by low-ticket categories. Analyzing this distribution helps to understand demand composition and why the network must focus on per-product profitability.'}</div>", unsafe_allow_html=True)
+        st.markdown(f"<div class='insight-box'><b>Insight:</b> {'O volume de vendas é puxado por categorias de baixo ticket. Analisar essa distribuição ajuda a entender a composição da demanda e por que a rede precisa focar na rentabilidade por produto.' if lang == 'PT-BR' else 'Sales volume is driven by low-ticket categories. Analyzing this distribution helps to understand demand composition and why the network must focus on per-product profitability.'}</div>", unsafe_allow_html=True)
         col4_a, col4_b = st.columns(2)
         with col4_a:
             st.markdown("**Visão Interativa (Plotly)**" if lang == "PT-BR" else "**Interactive View (Plotly)**")
@@ -248,10 +250,10 @@ if df is not None:
             ax4.set_ylabel("Quantidade" if lang == "PT-BR" else "Quantity")
             st.pyplot(fig4_stat)
 
-    # ABA 5: Eficiencia Logistica (Frete)
+    # ABA 5: Eficiência Logística (Frete)
     with tab5:
         st.subheader(tab5_label)
-        st.markdown(f"<div class='insight-box'><b>Insight:</b> {'O Paradoxo do Custo Logistico: Apesar da Loja 4 ter o menor custo de envio (frete) e a menor variancia, a baixa taxa de conversao de produtos de alto valor anula completamente essa vantagem competitiva local.' if lang == 'PT-BR' else 'The Logistics Cost Paradox: Although Store 4 has the lowest shipping costs and smallest variance, the low conversion rate of high-value products negates this competitive advantage.'}</div>", unsafe_allow_html=True)
+        st.markdown(f"<div class='insight-box'><b>Insight:</b> {'O Paradoxo do Custo Logístico: Apesar da Loja 4 ter o menor custo de envio (frete) e a menor variância, a baixa taxa de conversão de produtos de alto valor anula completamente essa vantagem competitiva local.' if lang == 'PT-BR' else 'The Logistics Cost Paradox: Although Store 4 has the lowest shipping costs and smallest variance, the low conversion rate of high-value products negates this competitive advantage.'}</div>", unsafe_allow_html=True)
         col5_a, col5_b = st.columns(2)
         with col5_a:
             st.markdown("**Distribuição Interativa (Plotly Boxplot)**" if lang == "PT-BR" else "**Interactive Distribution (Plotly Boxplot)**")
@@ -265,8 +267,8 @@ if df is not None:
             st.pyplot(fig5_stat)
 
 else:
-    st.error("Erro: Arquivo 'AluraStoreBrasil.csv' nao encontrado no repositorio." if lang == "PT-BR" else "Error: 'AluraStoreBrasil.csv' not found in repository.")
+    st.error("Erro: Arquivo 'AluraStoreBrasil.csv' não encontrado no repositório." if lang == "PT-BR" else "Error: 'AluraStoreBrasil.csv' not found in repository.")
 
-# --- RODAPE ---
+# --- RODAPÉ ---
 st.divider()
-st.markdown(f"<div style='text-align: center; color: #666; font-size: 13px; line-height: 1.5;'><b>{footer_text}</b><br>Desenvolvendo tecnologia sustentavel para reflorestar o digital.</div>", unsafe_allow_html=True)
+st.markdown(f"<div style='text-align: center; color: #666; font-size: 13px; line-height: 1.5;'><b>{footer_text}</b><br>Desenvolvendo tecnologia sustentável para reflorestar o digital.</div>", unsafe_allow_html=True)
