@@ -62,4 +62,4 @@ Aqui, comprovamos a ineficiência de conversão. O ticket médio da loja 4 opera
 * Execute as células para acompanhar a linha de raciocínio lógico e a geração dos gráficos.
 
 ---
-**Transparência e Vibe Coding:** A análise de dados, lógica de programação e tomada de decisão estratégica apresentadas neste repositório são de minha autoria. A redação e formatação estrutural deste README foram otimizadas com auxílio de IA (Gemini), focando em agilidade e entrega profissional. 🌱 *Reflorestando o Digital.*
+**Transparência com uso de IA:** A análise de dados, lógica de programação e tomada de decisão estratégica apresentadas neste repositório são de minha autoria. A redação e formatação estrutural deste README foram otimizadas com auxílio de IA (Gemini), focando em agilidade e entrega profissional. 🌱 *Reflorestando o Digital.*
